@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UniTech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #fff; font-family: 'Space Grotesk', sans-serif; color: #000; overflow-x: hidden; }
+    #valores, #metodologias, #servicos, #equipe { scroll-margin-top: 76px; }
+    .grad { background: linear-gradient(to bottom, #020811 0%, #082044 50%, #89ccec 100%); }
+
+    /* NAV */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      backdrop-filter: blur(20px);
+      background: rgba(5,5,5,0.01);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      transition: background 0.4s;
+    }
+    header.scrolled { background: rgba(2,8,17,0.92); }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5rem;
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .logo-text { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 22px; color: #fff; }
+    nav { display: flex; gap: 1.5rem; }
+    nav a { font-family: 'Poppins', sans-serif; font-size: 14px; color: #fff; text-decoration: none; opacity: 0.85; transition: opacity 0.2s; }
+    nav a:hover { opacity: 1; }
+    .btn-white {
+      background: #fff; color: #000;
+      font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 16px;
+      padding: 0.875rem 2.125rem; border-radius: 9999px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-white:hover { background: #e8e8e8; transform: scale(0.98); }
+
+    /* CTA BUTTON */
+    .cta-btn { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; text-decoration: none; }
+    .cta-outline {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0.875rem 2.125rem; border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+    .cta-outline span { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 16px; color: #fff; }
+    .arrow-circle {
+      width: 52px; height: 52px; background: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    .cta-btn:hover .arrow-circle { transform: rotate(45deg); }
+
+    /* HERO */
+    .hero-wrap {
+      margin: 1rem 1rem 0; border-radius: 16px; overflow: hidden;
+      position: relative; min-height: 720px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 8rem 1.5rem 5rem; max-width: 840px; margin: 0 auto; gap: 1.5rem;
+    }
+    .hero-brand { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 48px; line-height: 1.2; color: #fff; }
+    .hero-brand strong { font-weight: 700; color: #0063C9; }
+    .hero-h1 { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: clamp(32px,5vw,48px); line-height: 1.2; color: #fff; }
+    .hero-h1 .blue { color: #0063C9; }
+    .hero-p { font-size: 18px; line-height: 1.8; color: #fff; max-width: 634px; }
+    .avatars-row { display: flex; align-items: center; gap: 0.75rem; }
+    .avatars { display: flex; }
+    .avatar {
+      width: 50px; height: 50px; border-radius: 50%; border: 2px solid #082044;
+      margin-left: -12px; overflow: hidden; background: #1a3a6a;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif; font-size: 12px; color: #89ccec; font-weight: 600;
+      object-fit: cover; flex-shrink: 0;
+    }
+    .avatars .avatar:first-child { margin-left: 0; }
+    .avatars-label { font-family: 'Poppins', sans-serif; font-size: 18px; color: #fff; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(36px); } to { opacity:1; transform:translateY(0); } }
+    .hero-content > * { opacity: 0; animation: fadeUp 0.8s ease forwards; }
+    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.3s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.5s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.7s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.9s; }
+
+    /* DIFERENCIAIS */
+    .diff-section { background: #fff; padding: 6rem 1.5rem; }
+    .diff-inner { max-width: 1140px; margin: 0 auto; }
+    .section-title { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 40px; line-height: 1.2; color: #000420; text-align: center; margin-bottom: 4rem; }
+    .section-title .blue { color: #0063C9; }
+    .timeline-wrap { position: relative; }
+    .timeline-line {
+      position: absolute; left: 50%; top: 60px; bottom: 60px; width: 2px;
+      background: #6f6f70; transform: translateX(-50%);
+    }
+    .timeline-items { display: flex; flex-direction: column; }
+    .timeline-item { position: relative; padding: 2.5rem 0; }
+    .timeline-dot {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #0063C9; border: 5px solid #0f0f10;
+      box-shadow: 0 0 0 2px #6f6f70; z-index: 2;
+    }
+    .diff-card {
+      background: #131312; border-radius: 4px; padding: 2.5rem; width: 45%;
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .diff-card.left { margin-right: auto; }
+    .diff-card.right { margin-left: auto; }
+    .diff-card.visible { opacity: 1; transform: translateY(0); }
+    .icon-circle {
+      width: 66px; height: 66px; border-radius: 50%; background: #83C4E4;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+    }
+    .diff-card h3 { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 24px; color: #f1f1f1; margin-bottom: 0.75rem; }
+    .diff-card p { font-size: 16px; line-height: 1.7; color: #bdbdbd; }
+
+    /* METODOLOGIAS */
+    .meto-section { background: #fff; padding: 7rem 1.5rem; }
+    .meto-inner { max-width: 1140px; margin: 0 auto; }
+    .meto-sub { font-size: 18px; color: #696969; line-height: 1.8; max-width: 664px; margin: 1.5rem auto 4rem; text-align: center; }
+    .meto-cards { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .meto-card {
+      border-radius: 4px; flex: 1; min-width: 300px; overflow: hidden;
+      opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .meto-card.visible { opacity: 1; transform: translateY(0); }
+    .meto-card-inner { padding: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; height: 100%; }
+    .meto-card-title {
+      padding: 1.25rem 0; border-bottom: 1px solid rgba(0,0,0,0.2);
+      font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 32px; text-align: center;
+      background: linear-gradient(135deg, #74b8ff 0%, #0063C9 60%, #003f80 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .meto-block { padding: 0.5rem 0; }
+    .meto-block h4 { font-family: 'Poppins', sans-serif; font-size: 24px; color: #fff; line-height: 1.35; }
+    .meto-block p { font-size: 18px; color: #fffcfc; line-height: 1.8; margin-top: 0.75rem; }
+    .meto-card-footer { display: flex; justify-content: center; padding-top: 1rem; }
+    .cta-sm .arrow-circle { width: 46px; height: 46px; }
+
+    /* SERVICOS */
+    .serv-section { background: #131312; }
+    .serv-row {
+      display: flex; align-items: stretch;
+      opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .serv-row.visible { opacity: 1; transform: translateY(0); }
+    .serv-content { flex: 1; padding: 4rem 5rem; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
+    .serv-content h2 { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 40px; line-height: 1.2; color: #fff; }
+    .serv-content h2 .blue { color: #0063C9; }
+    .serv-content p { font-size: 15px; line-height: 1.8; color: #fff; max-width: 372px; }
+    .serv-img { flex: 1; min-height: 496px; display: flex; align-items: center; justify-content: center; }
+    .img-web { background: linear-gradient(135deg, #0a1628 0%, #0d2d6b 100%); }
+    .img-mob { background: linear-gradient(135deg, #051020 0%, #0a1f4a 100%); }
+
+    /* EQUIPE */
+    .team-section { background: #fff; padding: 6rem 1.5rem; }
+    .team-inner { max-width: 845px; margin: 0 auto; }
+    .team-inner > h2 { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 40px; color: #000420; text-align: center; margin-bottom: 4rem; }
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .team-member {
+      display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+      opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .team-member.visible { opacity: 1; transform: translateY(0); }
+    .team-avatar { width: 125px; height: 124px; border-radius: 50%; background: #D9D9D9; }
+    .team-name { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 32px; color: #000420; text-align: center; }
+    .team-role { font-size: 18px; color: #0063C9; text-align: center; margin-top: 0.25rem; }
+
+    /* FAQ */
+    .faq-section { background: #fff; padding: 6rem 1.5rem; }
+    .faq-inner { max-width: 1140px; margin: 0 auto; }
+    .faq-h2 { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 40px; color: #000420; text-align: center; margin-bottom: 3rem; line-height: 1.2; }
+    .faq-h2 .blue { color: #0063C9; }
+    .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .faq-item { background: #161616; border-radius: 4px; overflow: hidden; }
+    .faq-btn { width: 100%; display: flex; align-items: center; gap: 0.75rem; padding: 1.5rem; text-align: left; background: none; border: none; cursor: pointer; }
+    .faq-chev { width: 16px; height: 16px; color: #0063C9; flex-shrink: 0; transition: transform 0.3s; }
+    .faq-chev.open { transform: rotate(180deg); }
+    .faq-q { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 16px; color: #fff; letter-spacing: -0.5px; }
+    .faq-ans { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-ans.open { max-height: 200px; }
+    .faq-ans p { padding: 0 1.5rem 1.5rem 3rem; font-size: 15px; color: #bdbdbd; line-height: 1.7; }
+
+    /* FOOTER */
+    footer { margin: 0 1rem 1rem; border-radius: 16px; overflow: hidden; position: relative; padding: 5rem 1.5rem; }
+    .footer-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; max-width: 840px; margin: 0 auto; text-align: center; }
+    .footer-brand-title { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 48px; color: #fff; }
+    .footer-brand-title strong { font-weight: 700; color: #0063C9; }
+    .footer-cta-h { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 48px; color: #fff; line-height: 1.2; }
+    .footer-cta-h .blue { color: #0063C9; }
+    .footer-contacts { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; font-size: 18px; color: #fff; line-height: 1.8; }
+    .footer-contacts .hi { color: #74b8ff; }
+
+    /* REVEAL — elementos ficam visiveis por padrao, animam quando JS carrega */
+    .rev { opacity: 1; transform: none; }
+    .rev.js-ready { opacity: 0; transform: translateY(28px); }
+    .rev.visible { opacity: 1 !important; transform: translateY(0) !important; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-inner { padding: 1rem 1.25rem; }
+      nav { display: none; }
+      .diff-card { width: 90%; margin: 0 auto !important; }
+      .timeline-line, .timeline-dot { display: none; }
+      .meto-cards { flex-direction: column; }
+      .serv-row { flex-direction: column !important; }
+      .serv-content { padding: 2.5rem 1.5rem; order: 1; }
+      .serv-img { min-height: 260px; width: 100%; order: 2; }
+      .serv-img img { width: 100%; height: 260px; object-fit: cover; object-position: center; }
+      .team-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .team-name { font-size: 24px; }
+      .footer-brand-title, .footer-cta-h { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="nav-inner">
+    <a class="logo-wrap" href="#">
+      <svg width="31" height="31" viewBox="0 0 31 31" fill="none">
+        <circle cx="15.5" cy="15.5" r="14" stroke="white" stroke-width="2"/>
+        <path d="M10 15.5h11M15.5 10l5.5 5.5-5.5 5.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text">UniTech</span>
+    </a>
+    <nav>
+      <a href="#valores">Valores</a>
+      <a href="#metodologias">Metodologias</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#equipe">Time</a>
+    </nav>
+    <button class="btn-white" onclick="document.getElementById('footer').scrollIntoView({behavior:'smooth'})">Fale Conosco</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-wrap grad">
+  <div class="hero-content">
+    <p class="hero-brand"><strong>Uni</strong>Tech</p>
+    <h1 class="hero-h1">Tecnologia ágil que <span class="blue">evolui</span> com o seu negócio.</h1>
+    <p class="hero-p">Construímos software de alta performance, focando na parceria contínua e na entrega constante de valor para a sua empresa.</p>
+    <div class="avatars-row">
+      <div class="avatars">
+        <img class="avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="cliente"/>
+        <img class="avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="cliente"/>
+        <img class="avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="cliente"/>
+        <img class="avatar" src="https://randomuser.me/api/portraits/men/75.jpg" alt="cliente"/>
+        <div class="avatar">+</div>
+      </div>
+      <p class="avatars-label">+100 Clientes atendidos</p>
+    </div>
+    <a class="cta-btn" href="#footer">
+      <div class="cta-outline"><span>Fale conosco</span></div>
+      <div class="arrow-circle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#0063C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="diff-section" id="valores">
+  <div class="diff-inner">
+    <h2 class="section-title">O que diferencia uma página que<br><span class="blue">converte das demais?</span></h2>
+    <div class="timeline-wrap">
+      <div class="timeline-line"></div>
+      <div class="timeline-items">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="diff-card left rev">
+            <div class="icon-circle">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <path d="M5 25L15 5l10 20H5z" fill="#0063C9"/>
+                <path d="M9 17h12" stroke="white" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3>Colaboração com o Cliente</h3>
+            <p>Pensado e planejado para envolver e persuadir o visitante a realizar uma ação desejada, como se inscrever em uma lista de e-mails ou até mesmo fazer uma compra.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="diff-card right rev">
+            <div class="icon-circle">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <rect x="6" y="2" width="16" height="24" rx="3" fill="#0063C9"/>
+                <path d="M10 7h8M11 22h6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Transparência</h3>
+            <p>Adaptação para diferentes tamanhos de tela, seja para Celular, Tablet e Desktop, proporcionando uma experiência ao usuário consistente e agradável.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="diff-card left rev">
+            <div class="icon-circle">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M14 3l2.8 5.6 6.2.9-4.5 4.4 1.1 6.1L14 17l-5.6 3 1.1-6.1L5 9.5l6.2-.9L14 3z" fill="#0063C9"/>
+              </svg>
+            </div>
+            <h3>Excelência Técnica</h3>
+            <p>Carregamento rápido, em menos de 2 segundos, é o tempo ideal para manter o visitante engajado com o conteúdo, aumentando a taxa de conversão.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METODOLOGIAS -->
+<section class="meto-section" id="metodologias">
+  <div class="meto-inner">
+    <h2 class="section-title" style="margin-bottom:0">Nossas <span class="blue">Metodologias Ágeis</span></h2>
+    <p class="meto-sub">Construímos software de alta performance, focando na parceria contínua e na entrega constante de valor para a sua empresa.</p>
+    <div class="meto-cards">
+
+      <div class="meto-card grad rev">
+        <div class="meto-card-inner">
+          <div class="meto-card-title">Scrum</div>
+          <div class="meto-block">
+            <h4>Páginas desenvolvidas</h4>
+            <p>Ideal para projetos novos onde precisamos de flexibilidade para adaptar os requisitos de acordo com o feedback do cliente.</p>
+          </div>
+          <div class="meto-block">
+            <h4>Como usamos no dia-a-dia?</h4>
+            <p>Dividimos o desenvolvimento em ciclos curtos para garantir entregas contínuas de valor.</p>
+          </div>
+          <div class="meto-block">
+            <h4>Nossas Práticas:</h4>
+            <p>Realizamos Sprints de 2 semanas, reuniões diárias (Daily Scrum) de 15 minutos para alinhamento e fazemos retrospectivas para melhorar o processo.</p>
+          </div>
+          <div class="meto-card-footer">
+            <a class="cta-btn cta-sm" href="#footer">
+              <div class="cta-outline"><span>Fale conosco</span></div>
+              <div class="arrow-circle" style="width:46px;height:46px">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#0063C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="meto-card grad rev" style="transition-delay:0.15s">
+        <div class="meto-card-inner">
+          <div class="meto-card-title">Kanban</div>
+          <div class="meto-block">
+            <h4>Páginas desenvolvidas</h4>
+            <p>É a melhor abordagem para manutenção de sistemas e fluxos de trabalho contínuos, garantindo eficiência sem sobrecarregar o time.</p>
+          </div>
+          <div class="meto-block">
+            <h4>Como usamos no dia-a-dia?</h4>
+            <p>Utilizamos a gestão visual para mapear o fluxo de valor, focando em terminar o que já foi começado antes de iniciar algo novo.</p>
+          </div>
+          <div class="meto-block">
+            <h4>Nossas Práticas:</h4>
+            <p>Trabalhamos com limites de WIP (Work in Progress) com máximo de 3 tarefas por pessoa e utilizamos quadros visuais para total transparência.</p>
+          </div>
+          <div class="meto-card-footer">
+            <a class="cta-btn cta-sm" href="#footer">
+              <div class="cta-outline"><span>Fale conosco</span></div>
+              <div class="arrow-circle" style="width:46px;height:46px">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#0063C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SERVICOS -->
+<section class="serv-section" id="servicos">
+  <div class="serv-row rev">
+    <div class="serv-img serv-img-web" style="background:#0a1628">
+      <img src="https://static.wixstatic.com/media/cfc186_104f0537ab084f008a8169832b477b8f~mv2.png" alt="Sistemas Web" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+    </div>
+    <div class="serv-content">
+      <h2>Sistemas <span class="blue">Web</span></h2>
+      <p>Plataformas sob medida, escaláveis e focadas em resolver problemas complexos com alta performance.</p>
+      <a class="cta-btn" href="#footer">
+        <div class="cta-outline"><span>Fale conosco</span></div>
+        <div class="arrow-circle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#0063C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="serv-row rev" style="transition-delay:0.1s">
+    <div class="serv-content">
+      <h2>Apps <span class="blue">Mobile</span></h2>
+      <p>Aplicativos intuitivos para iOS e Android que conectam seu negócio aos seus clientes na palma da mão.</p>
+      <a class="cta-btn" href="#footer">
+        <div class="cta-outline"><span>Fale conosco</span></div>
+        <div class="arrow-circle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#0063C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+    <div class="serv-img" style="background:#051020">
+      <img src="https://static.wixstatic.com/media/cfc186_84b1b57691474a55a562340d08b0867e~mv2.png" alt="Apps Mobile" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<section class="team-section" id="equipe">
+  <div class="team-inner">
+    <h2>O Time</h2>
+    <div class="team-grid">
+      <div class="team-member rev">
+        <img class="team-avatar" src="https://static.wixstatic.com/media/cfc186_f5ae44df36294d91a3018dee24f4ee7f~mv2.png" alt="André Manoel" style="object-fit:cover;"/>
+        <div><p class="team-name">André Manoel</p><p class="team-role">UI/UX Designer</p></div>
+      </div>
+      <div class="team-member rev" style="transition-delay:0.1s">
+        <img class="team-avatar" src="https://static.wixstatic.com/media/cfc186_b4e4a9874edb410fa0fdcf9db771383e~mv2.png" alt="Arthur" style="object-fit:cover;"/>
+        <div><p class="team-name">Arthur</p><p class="team-role">Scrum Master</p></div>
+      </div>
+      <div class="team-member rev" style="transition-delay:0.2s">
+        <img class="team-avatar" src="https://static.wixstatic.com/media/cfc186_3e37c4da34a44e1981b0b9e5e38fa568~mv2.png" alt="Viktor Carlos" style="object-fit:cover;"/>
+        <div><p class="team-name">Viktor Carlos</p><p class="team-role">Product Owner</p></div>
+      </div>
+      <div class="team-member rev" style="transition-delay:0.3s">
+        <img class="team-avatar" src="https://static.wixstatic.com/media/cfc186_80d65d74cce94d399914baf0055c4d1c~mv2.png" alt="Matheus Moura" style="object-fit:cover;"/>
+        <div><p class="team-name">Matheus Moura</p><p class="team-role">Desenvolvedor Full-Stack</p></div>
+      </div>
+      <div class="team-member rev" style="transition-delay:0.4s">
+        <img class="team-avatar" src="https://static.wixstatic.com/media/cfc186_130eb733064e4ed4bfca1b11a6e7b173~mv2.png" alt="Vinicius Augusto" style="object-fit:cover;"/>
+        <div><p class="team-name">Vinicius Augusto</p><p class="team-role">Desenvolvedor Front-End</p></div>
+      </div>
+      <div class="team-member rev" style="transition-delay:0.5s">
+        <img class="team-avatar" src="https://static.wixstatic.com/media/cfc186_1698066be0004c4e82e782511afc29e2~mv2.png" alt="Noronha" style="object-fit:cover;"/>
+        <div><p class="team-name">Noronha</p><p class="team-role">Desenvolvedor Back-End</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <h2 class="faq-h2">Pronto para <span class="blue">acelerar</span><br>o seu negócio?</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="grad" id="footer">
+  <div class="footer-inner">
+    <p class="footer-brand-title"><strong>Uni</strong>Tech</p>
+    <h2 class="footer-cta-h">Pronto para <span class="blue">Acelerar</span> seu negócio?</h2>
+    <div class="footer-contacts">
+      <span><span class="hi">Email: </span>contato<!-- -->@<!-- -->unitech.com.br</span>
+      <span><span class="hi">Telefone: </span>(81) 99999-0000</span>
+      <span><span class="hi">Localização: </span>Recife, PE</span>
+    </div>
+    <a class="cta-btn" href="mail<!-- -->to:contato<!-- -->@<!-- -->unitech.com.br">
+      <div class="cta-outline"><span>Fale conosco</span></div>
+      <div class="arrow-circle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#0063C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+</footer>
+
+<script>
+  // Header scroll
+  const hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 60));
+
+  // FAQ
+  const faqData = [
+    { q: "Podemos usar templates prontos?", a: "Sim, mas adaptem significativamente. O conteúdo e a aplicação dos conceitos ágeis devem ser 100% originais." },
+    { q: "A página precisa ter backend/banco de dados?", a: "Não. Uma página estática é suficiente. Foco no conteúdo e design." },
+    { q: "Quantas páginas a landing page deve ter?", a: "Uma única página (single page) com seções é o ideal. Se preferirem múltiplas páginas, máximo 3." },
+    { q: "Posso usar IA para escrever os textos?", a: "Pode usar como auxílio, mas revisem e personalizem. Textos genéricos serão penalizados." },
+    { q: "Precisa ter animações e efeitos visuais?", a: "Não é obrigatório, mas um visual atrativo ajuda. Priorize: conteúdo > design > animações." },
+    { q: "Podemos mudar a estrutura sugerida?", a: "Sim! A estrutura é apenas uma sugestão. Sejam criativos, mas garantam que todos os requisitos obrigatórios estejam presentes." },
+  ];
+  const faqList = document.getElementById('faqList');
+  let openFaq = null;
+  faqData.forEach((f, i) => {
+    const el = document.createElement('div');
+    el.className = 'faq-item';
+    el.innerHTML = '<button class="faq-btn" onclick="tog(' + i + ')">'
+      + '<svg id="c' + i + '" class="faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>'
+      + '<span class="faq-q">' + f.q + '</span>'
+      + '</button><div class="faq-ans" id="a' + i + '"><p>' + f.a + '</p></div>';
+    faqList.appendChild(el);
+  });
+  function tog(i) {
+    const ans = document.getElementById('a' + i), chev = document.getElementById('c' + i);
+    if (openFaq === i) { ans.classList.remove('open'); chev.classList.remove('open'); openFaq = null; return; }
+    if (openFaq !== null) {
+      document.getElementById('a' + openFaq).classList.remove('open');
+      document.getElementById('c' + openFaq).classList.remove('open');
+    }
+    ans.classList.add('open'); chev.classList.add('open'); openFaq = i;
+  }
+
+  // Reveal on scroll
+  const revEls = document.querySelectorAll(".rev");
+  if ("IntersectionObserver" in window) {
+    revEls.forEach(el => el.classList.add("js-ready"));
+    const ro = new IntersectionO
